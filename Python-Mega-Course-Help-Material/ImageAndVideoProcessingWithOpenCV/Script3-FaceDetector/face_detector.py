@@ -1,0 +1,29 @@
+import cv2
+
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
+
+img = cv2.imread("photo.jpg")
+
+gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+faces = face_cascade.detectMultiScale(gray_img, scaleFactor=1.05, minNeighbors=5)
+
+
+# print(type(faces))
+# <class 'numpy.ndarray'>
+# numpy ndirectional array object
+
+# print(faces)
+# [[157  84 379 379]]
+# 157th column, 84th row, width, height
+
+for x, y, w, h in faces:
+    img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
+
+
+resized = cv2.resize(img, (int(img.shape[1] / 3), int(img.shape[0] / 3)))
+
+cv2.imshow("Gray", resized)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
